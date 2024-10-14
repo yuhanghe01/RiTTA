@@ -1,0 +1,50 @@
+DATA_CREATION_CONFIG:
+    sample_rate: 16000
+    audio_len_sec: 10
+    mel_bins: 64
+    fmin: 50
+    fmax: 8000
+    window_size: 1024
+    hop_size: 320
+    window: hann
+    pad_mode: reflect
+    center: true
+    ref: 1.0
+    amin: 1e-10
+    top_db: None
+    label_filename: ../name2label_map.txt
+    seed_audio_dir: /hdd2/yuhang/soundsource-2.0/audioldm/Ours/seed_sounds_filtered
+    class_num: 25
+    time_resolution: 0.5
+TRAIN_CONFIG:
+    mode: train
+    random_seeds: [100, 200]
+    train_samples: 100000
+    test_samples: 10000
+    min_polyphony: 1
+    max_polyphony: 5
+    pretrained_model: ../models/Cnn14_DecisionLevelMax_mAP=0.385.pth
+    finetune: true
+    freeze_base: false
+    train_from_scratch: true
+    ckpt_save_dir: /home/yuhang/soundsource-2.0/audioldm/audioset_tagging_cnn/finetune_det/trained_model
+    add_param_l2regu_loss: false
+    optimizer: Adam
+    save_every_n_epochs: 10
+    batch_size: 100
+    train_epochs: 1000
+    init_lr: 0.0001
+    weight_decay: 0
+    lr_decay_epochs: 200
+    lr_decay_gamma: 0.5
+    no_object_weight: 0.1
+    l1_weight: 0.1
+    ce_weight: 1.
+    log_loss_every_steps: 50
+    print_info_every_n_iters: 10
+    random_seed: 100
+    sampling_rate: 16000
+    channel_num: 6
+    waveform_len_sec: 3
+    spectrum_shape: [160, 320]
+    contain_mixup: false

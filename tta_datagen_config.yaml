@@ -1,0 +1,51 @@
+AUDIO_CATEGORY: ['animal', 'human', 'machinery', 'human_obj_interact', 'obj_obj_interact']
+animal: ['bird_chirping', 'cat_meowing', 'dog_barking', 'rooster_crowing', 'sheep_bleating']
+human: ['baby_crying', 'coughing', 'laughing', 'whistling','talking']
+machinery: ['boat_horn', 'car_horn', 'door_bell', 'paper_shredder', 'telephone_ring']
+human_obj_interact: ['vegetable_chopping',  'door_slam',  'footstep',  'keyboard_typing',  'toilet_flush']
+obj_obj_interact: ['emergent_brake',  'glass_drop',  'hammering_nail',  'key_jingling',  'wood_sawing']
+RELATION_CORPUS: ['Spatial_distance', 'Temporal_Order', 'Count', 'Compositionality']
+DATA_CREATION_CONFIG:
+  audio_cate2create: ['animal', 'human', 'machinery', 'human_obj_interact', 'obj_obj_interact']
+  relations2create: ['Count', 'Compositionality', 'Temporal_Order', 'Spatial_Distance']
+  each_relation_num2gen: 14400 # 360 equals to 1 hour
+  audio_length: 10 # seconds
+  audio_sr: 16000 # Hz
+  save_dir: /mnt/nas/yuhang/audioldm/gen_data_train
+  seed_audio_dir: seed_audios
+  name2label_filename: name2label_map.txt
+  loudness_reduction_ratio: 0.2
+  ensure_nonoverlapping: true
+  random_seed: 200 # 100 for test data, 200 for train data
+  Count_Config:
+    max_count: 5
+    min_count: 2
+    max_audio_len: 5
+    min_audio_len: 1
+    inter_source: false
+    inter_audio: true
+    relations: ['count']
+  Temporal_Order_Config:
+    max_count: 2
+    min_count: 2
+    max_audio_len: 5
+    min_audio_len: 1
+    inter_source: true
+    inter_audio: true
+    relations: ['before', 'after', 'together']
+  Spatial_Distance_Config:
+    max_count: 2
+    min_count: 2
+    max_audio_len: 5
+    min_audio_len: 1
+    inter_source: true
+    inter_audio: true
+    relations: ['closefirst', 'farfirst','equaldist']
+  Compositionality_Config:
+    max_count: 3
+    min_count: 2
+    max_audio_len: 5
+    min_audio_len: 1
+    inter_source: true
+    inter_audio: true
+    relations: ['and', 'or', 'not', 'if_then_else']
