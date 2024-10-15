@@ -104,6 +104,17 @@ We finetune Tango [3] with 44 hours our generated text-audio relation data. The 
 
 ### Citation
 
+[1] Junichi Yamagishi, Christophe Veaux, and Kirsten MacDonald. CSTR VCTK Corpus: English
+Multi-speaker Corpus for CSTR Voice Cloning Toolkit (version 0.92), 2019.
+
+[2] Qiuqiang Kong, Yin Cao, Turab Iqbal, Yuxuan Wang, Wenwu Wang, and Mark Plumbley. PANNS:
+Large-Scale Pretrained Audio Neural Networks for Audio Pattern Recognition. In IEEE/ACM
+Transactions on Audio, Speech, and Language Processing (TASLP), 2020.
+
+[3] Deepanway Ghosal, Navonil Majumder, Ambuj Mehrish, and Soujanya Poria. Text-to-Audio
+Generation using Instruction Tuned LLM and Latent Diffusion Model. In ACM International
+Conference on Multimedia (ACMMM), 2023.
+
 <!-- cd  -->
 
 <!-- ## Acknowledgements :clap:
