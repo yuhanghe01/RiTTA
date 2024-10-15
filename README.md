@@ -1,91 +1,110 @@
 ## RiTTA: Modeling Event Relations in Text-to-Audio Generation
 
-[Yuhang He$^1$](https://yuhanghe01.github.io/),
-[Yash Jain$^2$](https://scholar.google.com/citations?user=Fr6QHDsAAAAJ&hl=en),
-[Xubo Liu$^3$](https://liuxubo717.github.io/),
-[Andrew Markham$^1$](https://www.cs.ox.ac.uk/people/andrew.markham/),
-[Vibhav Vineet$^2$](https://vibhav-vineet.github.io//),
+[Yuhang He<sup>1</sup>](https://yuhanghe01.github.io/),
+[Yash Jain<sup>2</sup>](https://scholar.google.com/citations?user=Fr6QHDsAAAAJ&hl=en),
+[Xubo Liu<sup>3</sup>](https://liuxubo717.github.io/),
+[Andrew Markham<sup>1</sup>](https://www.cs.ox.ac.uk/people/andrew.markham/),
+[Vibhav Vineet<sup>2</sup>](https://vibhav-vineet.github.io//)
 <br>
 1. Department of Computer Science, University of Oxford. Oxford. UK.
-2. Microsoft
-2. Centre for Vision, Speech & Singal Processing, University of Surrey.
+2. Microsoft Research.
+3. Centre for Vision, Speech & Singal Processing, University of Surrey, UK.
 
-**TL:DR**: We systematically benchmark audio events relation in Text-to-Audio generation by proposing 1. audio events corpus, 2. audio event category corpus, 3. seed audio event corpus. 4. new audio events relation aware evaluation metrics. 5. finetuning strategy for existing TTA models to boost their audio events relation modelling capability.
+**TL:DR**: We systematically benchmark audio events relation in Text-to-Audio generation by proposing:
+ 1. audio events relation corpus 
+ 2. audio event category corpus 
+ 3. seed audio event corpus 
+ 4. new audio events relation aware evaluation metrics 
+ 5. finetuning strategy for existing TTA models to boost their audio events relation modelling capability.
 
-<!-- <a href="https://arxiv.org/abs/2406.11006"><img src=res/SPEAR_mot.jpg></a>
-**SPEAR Motivation**: A stationary audio source is emitting audio in 3D space. Requiring neither source position nor 3D space acoustic properties, SPEAR simply requires two microphones to actively record the spatial audio independently at discrete positions. During training, SPEAR takes as input a pair of receiver positions and outputs a warping field potentially warping the recorded audio on reference position to target position. Minimizing the discrepancy between the warped audio and recorded audio enforces SPEAR to acoustically characterise the 3D space from receiver-to-receiver perspective. The learned SPEAR is capable of predicting spatial acoustic effects at arbitrary positions.
+<a href="./"><img src=./imgs/ritta_teasing_fig.png></a>
+**RiTTA Motivation**: The acoustic world is rich with diverse audio events that exhibit various relationships. While text can precisely describe these relationships, current TTA models struggle to capture both the audio events and the relations conveyed by the text. This challenge motivates us to systematically study RiTTA.
 
-### Abstract 
-We present *SPEAR*, a continuous receiver-to-receiver acoustic neural warping field for spatial acoustic effects prediction in an acoustic 3D space with a single stationary audio source. Unlike traditional source-to-receiver modelling methods that require prior space acoustic properties knowledge to rigorously model audio propagation from source to receiver, we propose to predict by warping the spatial acoustic effects from one reference receiver position to another target receiver position, so that the warped audio essentially accommodates all spatial acoustic effects belonging to the target position. *SPEAR* can be trained in a data much more readily accessible manner, in which we simply ask two robots to independently record spatial audio at different positions. We further theoretically prove the universal existence of the warping field if and only if one audio source presents. Three physical principles are incorporated to guide *SPEAR* network design, leading to the learned warping field physically meaningful. We demonstrate *SPEAR* superiority on both synthetic, photo-realistic and real-world dataset, showing the superiority of *SPEAR*.
+### Audio Events Relation Corpus
 
-Details of the model architecture and experimental results can be found in [our paper](https://arxiv.org/abs/2406.11006).
+We construct four main relations, each of which contains multiple sub-relations. In total, we have constructed 11 relations.
 
-### Challenge Presentation
-<img src=res/warpfield_irregu_vis_v2.jpg></a>
-Two challenges in SPEAR learning: **Position-Sensitivity** and **Irregularity**. The position-sensitivity is represented by much lower structural similarity index (SSIM) of two neighboring-step warping fields than the two RGB images (sub-fig.~C). The warping field irregularity is represented by both warping field visualization in frequency domain (real part) and much higher sample entropy score than regular sine wave (and just half of random waveform) (sub-fig. D).
+| Main Relation      | Sub-Relation                | Sample Text Prompt                                                         |
+|--------------------|-----------------------------|----------------------------------------------------------------------------|
+| Temporal Order     | before; after; simultaneity  | generate dog barking audio, followed by cat meowing                        |
+| Spatial Distance   | close first; far first; equal dist. | generate dog barking audio that is 1 meter away, followed by another 5 meters away |
+| Count              | count                        | produce 3 audios: dog barking, cat meowing and talking                     |
+| Compositionality   | and; or; not; if-then-else   | create dog barking audio or cat meowing audio                              |
 
-### Main results
-<p float="middle">
-  <img src="res/MainResultTable.png" />
-</p>
+### Audio Events Category Corpus
 
-<p>
-  <img src="res/warpfield_vis.png" /> 
-</p>
+We construct four main audio events categories that cover the commonly heard audio events in our daily life, each of which further corresponds to multiple sub-categories. For each category, we collect five seed exemplar audios from either [freesound.org](https://freesound.org/) or VCTK dataset [1] (just for the talking category). 
 
-We qualitatively compare our model with three other baseline methods on 5 metrics, from which we can see that *SPEAR* outperforms all the three comparing methods by a large margin (except for one PSNR metric). 
+| Main Category              | Sub-Category                                                                 |
+|----------------------------|------------------------------------------------------------------------------|
+| Human Audio                | baby crying; talking; laughing; coughing; whistling                          |
+| Animal Audio               | cat meowing; bird chirping; dog barking; rooster crowing; sheep bleating      |
+| Machinery                  | boat horn; car horn; door bell; paper shredder; telephone ring               |
+| Human-Object Interaction   | vegetable chopping; door slam; footstep; keyboard typing; toilet flush        |
+| Object-Object Interaction  | emergent brake; glass drop; hammer nailing; key jingling; wood sawing        |
 
-We also provide qualitative comparison of the predicted warping field, in which we visualize the warping field (real-part) on a synthetic dataset (A) and real-world dataset (B) gnererated by all 4 methods. We can clearly observe that our *SPEAR* is more capable of generating the irregularity pattern from the input position pair than the other baseline models. 
+### Text-Audio Pair Generation Strategy
 
-### Result Reproduction
+We maximise the text-audio pair generation diversity by:
 
-#### Step 1: Create Envirionment
-The experiment environment is given in file `environment.txt`. The code has been tested on Ubuntu 22.04.
+1. adopting GPT-4 to augment the text description so that the same relation can be expressed by multiple vibrant texts.
+2. disentangling relation text description and audio events so that the same relation can be associated with arbitrary audio events.
+3. diversifying the final audio generation from selected audio events.
 
-#### Generate synthetic data
-To generate the synthetic train and test data using Pyroomacoustic, run the following command
+![relation-datagen](./imgs/relation_datagen_pipeline.png)
+
+<figcaption align="center">Fig 2: Text-Audio pair generation pipeline.</figcaption>
+
+### Relation Aware Evaluation
+
+For any TTA model generated audio, we first apply audio events detection model (in our case, we use PANNS [2]) to detect all potential audio events. Each detected audio event has the meta data: start/end time, semantic class, confidence score. Based on the detected audio events, we adopt a multi-stage relation aware evaluation framework to evaluate how accurate the pre-specified relation is incorporated in the audio.
+
+* **Presence Score**, which checks whether the pre-specified audio events are detected in the generated audio.
+* **Relation Correctness Score**, which further checks if the pre-specified relation is correctly modelled in the generated audio.
+* **Parsimony Score**, which checks the redundancy in the generated audio, unnecessary and excessive audio events lead to lower parsimony score.
+
+Finally, averaging across all relations gets average-(Presence/Relation Correctness/Parsimony) score, further averaging across multiple audio events confidence scores gets mean average (mA-) Presence/Relation Correctness/Parsimony score. Multiplying the three mA- scores gives us the final multi-stage relation aware score **mAMSR**.
+
+### Code Detail Explanation
+
+#### 1. Text-Audio pair data generation
 
 ```python
-python data/R2RGenerator.py train
-python data/R2RGenerator.py test
+python main_gen_TTA_data.py
 ```
 
-#### Step 2: Train
-To train a model, run 
-```shell
-python train.py configs/Hyperparameter.yaml
+#### 2. Evaluation
+
+```python
+#in folder evaluation
+#relation aware eval.
+python main_gen_TTA_data.py
+#general eval.
+python main_extract_embed.py
+python KL_score.py
+python FD_score.py
+python FAD_score.py
 ```
+#### 3. Audio Event Detection Model Finetune
 
-#### Step 3: Test
-To evaluate a model's test performance metric, uncomment corresponding lines in `test.py` and run the file. 
-```shell
-python test.py
+```python
+#in folder finetune_panns
+python main_finetune_panns.py
 ```
+### Tango Fintuning Result
 
-#### Trained Models
-We provide [trained SPEAR models](https://drive.google.com/drive/folders/1NGhwLEprhPiHWhrJbbYsSx9ne6frUZUe?usp=sharing) in 4 scenes: Synthetic Shoe Box Room, Office 0 and Office 4 in Replica dataset, and MeshRIR dataset.
+We finetune Tango [3] with 44 hours our generated text-audio relation data. The quantitative evaluation shows finetuning can improve existing TTA model's audio events relation modelling capability.
 
+| Model                        | FAD $\downarrow$  | KL $\downarrow$   | FD $\downarrow$   | mAPre $\uparrow$ | mARel $\uparrow$   | mAPar $\uparrow$   | mAMSR $\uparrow$   |
+|------------------------------|--------|--------|--------|---------|---------|---------|---------|
+| Tango | 10.79  | 90.26  | 39.46  | 11.13   | 2.27    | 9.88    | 3.10    |
+| Tango (finetuning)            | **4.60** | **23.92** | **27.03** | **21.23** | **10.78** | **20.35** | **48.67** |
 
-### Generated examples
-We provide examples of generated audios in `examples` folder
-- `examples/{scene_name}/{sound_source_name}/ref.wav`: simulated reference position audio
-- `examples/{scene_name}/{sound_source_name}/tgt.wav`: simulated target position audio
-- `examples/{scene_name}/{sound_source_name}/tgt_predicted.wav`: warped audio generated by the *SPEAR* model -->
 
 
 ### Citation
 
-<!-- **Please CITE** our paper if you found this repository helpful for producing publishable results or incorporating it into other software.
-```bibtext
-@misc{he2024spear,
-      title={SPEAR: Receiver-to-Receiver Acoustic Neural Warping Field}, 
-      author={Yuhang He and Shitong Xu and Jia-Xing Zhong and Sangyun Shin and Niki Trigoni and Andrew Markham},
-      year={2024},
-      eprint={2406.11006},
-      archivePrefix={arXiv},
-      primaryClass={cs.SD}
-}
-``` -->
+<!-- cd  -->
 
 <!-- ## Acknowledgements :clap:
 todo -->
