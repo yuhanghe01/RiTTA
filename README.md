@@ -87,20 +87,30 @@ python KL_score.py
 python FD_score.py
 python FAD_score.py
 ```
+
 #### 3. Audio Event Detection Model Finetune
 
 ```python
 #in folder finetune_panns
 python main_finetune_panns.py
 ```
-### Tango Fintuning Result
+### 4. Tango Fintuning on RiTTA Data
 
-We finetune Tango [3] with 44 hours our generated text-audio relation data. The quantitative evaluation shows finetuning can improve existing TTA model's audio events relation modelling capability.
+1. We finetune Tango [3] with 44 hours our generated text-audio relation training set (call [main_gen_TTA_data.py](./main_gen_TTA_data.py) with random seed 200 in [tta_datagen_config.yaml](./tta_datagen_config.yaml) to generate the training set). We use Adam optimizer with a learning rate of $3\times10^{-5}$, batch size of $16$, SNR gamma value of $5$. The training was performed for 40 epochs on 4 A100 GPUs. The finetuned model can be download through the [GoogleDrive](https://drive.google.com/drive/folders/1Fpdiyp1tPQ-DrYp9sIB6adKZo9tgeLXo?usp=sharing).
 
-| Model                        | FAD $\downarrow$  | KL $\downarrow$   | FD $\downarrow$   | mAPre $\uparrow$ | mARel $\uparrow$   | mAPar $\uparrow$   | mAMSR $\uparrow$   |
-|------------------------------|--------|--------|--------|---------|---------|---------|---------|
-| Tango | 10.79  | 90.26  | 39.46  | 11.13   | 2.27    | 9.88    | 3.10    |
-| Tango (finetuning)            | **4.60** | **23.92** | **27.03** | **21.23** | **10.78** | **20.35** | **48.67** |
+2. How to run the inference with the finetuned model?
+
+   * Set up the Tango environment by following [Tango Github](https://github.com/declare-lab/tango).
+   * Edit `inference_finetune.sh` to specify the finetuned model, edit `inference_finetune.py` function `get_all_data()` to specify the text prompts.
+   * run `bash inference_finetune.sh` to get the inference result.
+
+
+3. We finetune Tango [3] with 44 hours generated text-audio relation data. The quantitative evaluation shows finetuning can improve existing TTA model's audio events relation modelling capability.
+
+   | Model                        | FAD $\downarrow$  | KL $\downarrow$   | FD $\downarrow$   | mAPre $\uparrow$ | mARel $\uparrow$   | mAPar $\uparrow$   | mAMSR $\uparrow$   |
+   |------------------------------|--------|--------|--------|---------|---------|---------|---------|
+   | Tango | 10.79  | 90.26  | 39.46  | 11.13   | 2.27    | 9.88    | 3.10    |
+   | Tango (finetuning)            | **4.60** | **23.92** | **27.03** | **21.23** | **10.78** | **20.35** | **48.67** |
 
 
 ### Cite This Work
@@ -108,13 +118,14 @@ We finetune Tango [3] with 44 hours our generated text-audio relation data. The 
 ```bibtex
 @inproceedings{yhhe2024ritta,
   title={{{RiTTA: Modeling Event Relations in Text-to-Audio Generation}},
-  author={He, Yuhang He and Jain, Yash and Liu, Xubo Liu and Markham, Andrew and Vineet, Vibhav},
+  author={He, Yuhang and Jain, Yash and Liu, Xubo and Markham, Andrew and Vineet, Vibhav},
   journal={arXiv:xxxx.xxxxx},
   year={2024}
 }
+```
 
 
-### Citation
+### Relevant Work
 
 [1] Junichi Yamagishi, Christophe Veaux, and Kirsten MacDonald. CSTR VCTK Corpus: English
 Multi-speaker Corpus for CSTR Voice Cloning Toolkit (version 0.92), 2019.
@@ -133,4 +144,4 @@ Conference on Multimedia (ACMMM), 2023.
 todo -->
 
 ### Contacts :email:
-If you have any questions or suggestions, welcome to contact us (yuhang.he@cs.ox.ac.uk).
+If you have any questions or suggestions, welcome to contact us (yuhang.he@cs.ox.ac.uk) or open an issue.
