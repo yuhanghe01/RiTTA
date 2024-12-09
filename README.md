@@ -1,3 +1,5 @@
+[![arXiv](https://img.shields.io/badge/arXiv-2301.12503-brightgreen.svg?style=flat-square)](https://arxiv.org/abs/xxxx.xxxxx)
+
 ## RiTTA: Modeling Event Relations in Text-to-Audio Generation
 
 [Yuhang He<sup>1</sup>](https://yuhanghe01.github.io/),
@@ -100,6 +102,16 @@ We finetune Tango [3] with 44 hours our generated text-audio relation data. The 
 | Tango | 10.79  | 90.26  | 39.46  | 11.13   | 2.27    | 9.88    | 3.10    |
 | Tango (finetuning)            | **4.60** | **23.92** | **27.03** | **21.23** | **10.78** | **20.35** | **48.67** |
 
+
+### Cite This Work
+
+```bibtex
+@inproceedings{yhhe2024ritta,
+  title={{{RiTTA: Modeling Event Relations in Text-to-Audio Generation}},
+  author={He, Yuhang He and Jain, Yash and Liu, Xubo Liu and Markham, Andrew and Vineet, Vibhav},
+  journal={arXiv:xxxx.xxxxx},
+  year={2024}
+}
 
 
 ### Citation
