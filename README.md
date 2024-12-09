@@ -122,10 +122,10 @@ python main_finetune_panns.py
 
 ```bibtex
 @inproceedings{yhhe2024ritta,
-  title={{{RiTTA: Modeling Event Relations in Text-to-Audio Generation}},
+  title={{RiTTA: Modeling Event Relations in Text-to-Audio Generation}},
   author={He, Yuhang and Jain, Yash and Liu, Xubo and Markham, Andrew and Vineet, Vibhav},
-  journal={arXiv:xxxx.xxxxx},
-  year={2024}
+  booktitle={arXiv:xxxx.xxxxx},
+  year=2024
 }
 ```
 
