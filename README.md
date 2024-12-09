@@ -53,7 +53,7 @@ We maximise the text-audio pair generation diversity by:
 2. disentangling relation text description and audio events so that the same relation can be associated with arbitrary audio events.
 3. diversifying the final audio generation from selected audio events.
 
-![relation-datagen](./imgs/relation_datagen_pipeline.png)
+![relation-datagen](./imgs/relation_datagen_pipeline.png){ style="display: block; margin: 0 auto;" }
 
 <figcaption align="center">Fig 2: Text-Audio pair generation pipeline.</figcaption>
 
