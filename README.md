@@ -2,7 +2,7 @@
 
 ## RiTTA: Modeling Event Relations in Text-to-Audio Generation
 
-[Yuhang He<sup>1</sup>](https://yuhanghe01.github.io/),
+[Yuhang He<sup>1,2</sup>](https://yuhanghe01.github.io/),
 [Yash Jain<sup>2</sup>](https://scholar.google.com/citations?user=Fr6QHDsAAAAJ&hl=en),
 [Xubo Liu<sup>3</sup>](https://liuxubo717.github.io/),
 [Andrew Markham<sup>1</sup>](https://www.cs.ox.ac.uk/people/andrew.markham/),
@@ -75,6 +75,8 @@ Finally, averaging across all relations gets average-(Presence/Relation Correctn
 python main_gen_TTA_data.py
 ```
 
+You need to edit `tta_datagen_config.yaml` to specify the data generation configuration.
+
 #### 2. Evaluation
 
 ```python
@@ -90,10 +92,13 @@ python FAD_score.py
 
 #### 3. Audio Event Detection Model Finetune
 
+To compute the relation aware evaluation score (see [section](#relation-aware-evaluation)), we first need to call audio event detection model to detect all potential audio events in a generated audio. The finetuned audio event detection model can be downloaded through the [GoogleDrive](https://drive.google.com/file/d/12L1UBeLPV2JkDSAGQ-zqgKeQGBObbCtP/view?usp=sharing). We also provide the finetuing code in directory [finetune_panns](./finetune_panns).
+
 ```python
 #in folder finetune_panns
 python main_finetune_panns.py
 ```
+
 ### 4. Tango Fintuning on RiTTA Data
 
 1. We finetune Tango [3] with 44 hours our generated text-audio relation training set (call [main_gen_TTA_data.py](./main_gen_TTA_data.py) with random seed 200 in [tta_datagen_config.yaml](./tta_datagen_config.yaml) to generate the training set). We use Adam optimizer with a learning rate of $3\times10^{-5}$, batch size of $16$, SNR gamma value of $5$. The training was performed for 40 epochs on 4 A100 GPUs. The finetuned model can be download through the [GoogleDrive](https://drive.google.com/drive/folders/1Fpdiyp1tPQ-DrYp9sIB6adKZo9tgeLXo?usp=sharing).
