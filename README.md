@@ -104,7 +104,7 @@ python main_finetune_panns.py
 
 ### 4. Tango Fintuning on RiTTA Data
 
-1. We finetune Tango [3] with 44 hours our generated text-audio relation training set (call [main_gen_TTA_data.py](./main_gen_TTA_data.py) with random seed 200 in [tta_datagen_config.yaml](./tta_datagen_config.yaml) to generate the training set). We use Adam optimizer with a learning rate of $3\times10^{-5}$, batch size of $16$, SNR gamma value of $5$. The training was performed for 40 epochs on 4 A100 GPUs. The finetuned model can be download through the [GoogleDrive](https://drive.google.com/drive/folders/1Fpdiyp1tPQ-DrYp9sIB6adKZo9tgeLXo?usp=sharing).
+1. We finetune Tango [3] with 44 hours our generated text-audio relation training set (call [main_gen_TTA_data.py](./main_gen_TTA_data.py) with random seed 200 in [tta_datagen_config.yaml](./tta_datagen_config.yaml) to generate the training set). We use Adam optimizer with a learning rate of $3\times10^{-5}$, batch size of $16$, SNR gamma value of $5$. The training was performed for 40 epochs on 4 A100 GPUs. The finetuned model can be downloaded through the [GoogleDrive](https://drive.google.com/drive/folders/1Fpdiyp1tPQ-DrYp9sIB6adKZo9tgeLXo?usp=sharing).
 
 2. How to run the inference with the finetuned model?
 
