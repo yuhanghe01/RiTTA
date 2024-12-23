@@ -1,0 +1,25 @@
+PANNS_cptpath: ../models/cnnCnn14_mAP=0.431.pth
+name2labelmap_filename: name_label_list.txt
+finetuned_det_panns: /hdd2/yuhang/soundsource-2.0/audioldm/audioset_tagging_cnn/finetune_det/trained_model_bak/TRC_model_epoch_490.pth
+finetuned_tag_panns: /hdd2/yuhang/soundsource-2.0/audioldm/audioset_tagging_cnn/finetune_tagging/trained_model/TRC_model_epoch_350.pth
+confscore: [0.5, 0.1, 0.9] # [min, step_size, max]
+eval4method: audioldm
+result_save_dir: /mnt/nas/yuhang/audioldm/relation_eval
+relations_require_timesteps: ['closefirst', 'farfirst', 'equaldist']
+relations_require_timeorder: ['before', 'after', 'together']
+relations_require_labelset: ['and', 'or', 'not', 'if_then_else', 'count']
+loudness_thred: 0.2
+min_event_lensec: 1.0
+parsimony_weight: 0.1
+dist_loudness_reduce_reatio: 0.2
+equaldist_loudness_tolerance_ratio: 0.4
+vggish_config:
+  use_pca: false 
+  use_activation: true
+panns_config:
+  sample_rate: 16000
+  window_size: 1024
+  hop_size: 320
+  mel_bins: 64
+  fmin: 50
+  fmax: 8000
