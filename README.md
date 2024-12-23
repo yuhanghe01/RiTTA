@@ -1,4 +1,4 @@
-[![arXiv](https://img.shields.io/badge/arXiv-2301.12503-brightgreen.svg?style=flat-square)](https://arxiv.org/abs/xxxx.xxxxx)
+[![arXiv](https://img.shields.io/badge/arXiv-2412.15922-brightgreen.svg?style=flat-square)](https://arxiv.org/abs/2412.15922)
 
 ## RiTTA: Modeling Event Relations in Text-to-Audio Generation
 
@@ -10,7 +10,7 @@
 <br>
 1. Department of Computer Science, University of Oxford. Oxford. UK.
 2. Microsoft Research.
-3. Centre for Vision, Speech & Singal Processing, University of Surrey, UK.
+3. Centre for Vision, Speech & Signal Processing, University of Surrey, UK.
 
 **TL:DR**: We systematically benchmark audio events relation in Text-to-Audio generation by proposing:
  1. audio events relation corpus 
@@ -127,7 +127,7 @@ python main_finetune_panns.py
 @inproceedings{yhhe2024ritta,
   title={{RiTTA: Modeling Event Relations in Text-to-Audio Generation}},
   author={He, Yuhang and Jain, Yash and Liu, Xubo and Markham, Andrew and Vineet, Vibhav},
-  booktitle={arXiv:xxxx.xxxxx},
+  booktitle={arXiv:2412.15922},
   year=2024
 }
 ```
