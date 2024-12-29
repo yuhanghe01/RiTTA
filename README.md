@@ -82,6 +82,26 @@ You need to edit `tta_datagen_config.yaml` to specify the data generation config
 
 #### 2. Evaluation
 
+Evaluation data is stored in `eval_data.pkl`, which contains about 8000 text prompts, where each relation has $720$ text prompts. 
+
+```python
+import pickle
+eval_data = pickle.load( open('eval_data.pkl', 'rb') )
+#eval_data['Count']['count'] or other entries.
+print(eval_data['Count']['count'][100:115])
+"""
+1. create 2 audio clips, including footstep and keyboard typing.
+2. generate 4 audio, among them are laughing, baby crying, whistling and coughing.
+...
+"""
+print(eval_data['Count']['count'][100:115])
+"""
+1. if generated bird chirping audio, then continue to generate telephone ring audio else to generate toilet flush audio.
+2. generate dog barking audio if generated vegetable chopping audio else just generate coughing audio.
+...
+"""
+```
+
 ```python
 #in folder evaluation
 #relation aware eval.
