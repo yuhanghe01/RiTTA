@@ -82,10 +82,11 @@ You need to edit `tta_datagen_config.yaml` to specify the data generation config
 
 #### 2. Evaluation
 
-Evaluation data is stored in `eval_data.pkl`, which contains about 8000 text prompts, where each relation has $720$ text prompts. 
+Evaluation data is stored in `eval_data.pkl`, which contains about 8000 text prompts, where each relation has $720$ text prompts. The corresponding reference audio (together with panns, vggish embedding) is accessible via [GoogleDrive](https://drive.google.com/file/d/1hYZCyJ-Aq1fARCbFXbU874GN8EoxY8Fq/view?usp=sharing).
 
 ```python
 import pickle
+
 eval_data = pickle.load( open('eval_data.pkl', 'rb') )
 #eval_data['Count']['count'] or other entries.
 print(eval_data['Count']['count'][100:115])
