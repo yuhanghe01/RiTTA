@@ -55,7 +55,7 @@ We maximise the text-audio pair generation diversity by:
 
 <!-- ![relation-datagen](./imgs/relation_datagen_pipeline.png){ style="display: block; margin: 0 auto;" } -->
 <div style="text-align: center;">
-  <img src="./imgs/relation_datagen_pipeline.png" alt="relation-datagen" />
+  <img src="./imgs/relation_datagen_pipeline.png" alt="relation-datagen" width="400" height=auto/>
 </div>
 
 <figcaption align="center">Fig 2: Text-Audio pair generation pipeline.</figcaption>
