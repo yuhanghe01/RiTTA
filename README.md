@@ -1,4 +1,4 @@
-[![arXiv](https://img.shields.io/badge/arXiv-2412.15922-brightgreen.svg?style=flat-square)](https://arxiv.org/abs/2412.15922)
+[![arXiv](https://img.shields.io/badge/arXiv-2412.15922-brightgreen.svg?style=flat-square)](https://arxiv.org/abs/2412.15922) [![Project Website](https://img.shields.io/badge/website-visit-blue?logo=github)](https://yuhanghe01.github.io/RiTTA-Proj/) ![Build](https://img.shields.io/badge/build-passing-brightgreen)
 
 ## RiTTA: Modeling Event Relations in Text-to-Audio Generation
 
