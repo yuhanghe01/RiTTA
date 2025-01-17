@@ -17,7 +17,7 @@ import glob
 import pickle
 
 def get_all_data():
-    pkl_filename = 'gen_data_test/data_dict.pkl'
+    pkl_filename = 'data_dict.pkl'
     data_dict = pickle.load(open(pkl_filename, 'rb'))
     all_data = list()
 
@@ -95,8 +95,6 @@ def main():
     if "hf_model" not in train_args:
         train_args["hf_model"] = None
     
-    # Load Models #
-    # train_args.hf_model = '/mnt/nas/algorithm/yuhang.he/RiTTA/tango'
     if train_args.hf_model:
         tango = Tango(train_args.hf_model, "cpu")
         vae, stft, model = tango.vae.cuda(), tango.stft.cuda(), tango.model.cuda()

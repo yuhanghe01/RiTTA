@@ -80,9 +80,6 @@ def summarize_relation_result_4onerelation(data_dict, relation_name):
                 presence_score_list.append(relation_rst_tmp['presence_score'])
                 relation_score_list.append(relation_rst_tmp['relation_score'])
                 parsimony_score_list.append(relation_rst_tmp['parsimony_score'])
-            # presence_score_list.append(data_dict[main_cate][sub_cate]['relation_result']['presence_score'])
-            # relation_score_list.append(data_dict[main_cate][sub_cate]['relation_result']['relation_score'])
-            # parsimony_score_list.append(data_dict[main_cate][sub_cate]['relation_result']['parsimony_score'])
 
     presence_score = np.mean(np.array(presence_score_list, np.float32))
     relation_score = np.mean(np.array(relation_score_list, np.float32))
@@ -150,7 +147,6 @@ def relation_eval(config,
                         audio_label_list = audio_label_list*2
                 pred_audio_basename = ref_audio_name.replace('.wav', '_{}.wav'.format(eval4method))
                 pred_audio = librosa.load(os.path.join(pred_audio_dir, pred_audio_basename), sr=16000)[0]
-                # assert os.path.exists(os.path.join(pred_audio_dir, pred_audio_basename))
                 pred_audio_det_basename = pred_audio_basename.replace('.wav', '_panns_det.npy')
                 assert os.path.exists(os.path.join(pred_audio_dir, pred_audio_det_basename))
                 pred_all_audioevents = dettagging_extractor.get_all_det_audioevents(det_filename=os.path.join(pred_audio_dir, pred_audio_det_basename),
@@ -161,55 +157,19 @@ def relation_eval(config,
                                                                                                         pred_audio=pred_audio,
                                                                                                         sub_relation=sub_relation,)
 
-                # print('main_cate: {}, sub_cate: {}, presence_score: {:.4f}, relation_score: {:.4f}, parsimony_score: {:.4f}'.format(main_cate, 
-                #                                                                                                                     sub_cate, 
-                #                                                                                                                     presence_score, 
-                #                                                                                                                     relation_score, 
-                #                                                                                                                     parsimony_score))
-                
                 output_dict[main_cate][sub_cate]['relation_result'].append( {'presence_score': presence_score,
                                                                      'relation_score': relation_score,
                                                                      'parsimony_score': parsimony_score} )
                 output_dict[main_cate][sub_cate]['data_info'].append(data_instance)
-                # print('main_cate: {}, sub_cate: {}, presence_score: {:.4f}, relation_score: {:.4f}, parsimony_score: {:.4f}'.format(main_cate, sub_cate, presence_score, relation_score, parsimony_score))
-    # # summarize the result
-    # presence_score, relation_score, parsimony_score = summarize_relation_result(output_dict)
-    # print('Overall: presence_score: {:.4f}, relation_score: {:.4f}, parsimony_score: {:.4f}'.format(presence_score, relation_score, parsimony_score))
-    # os.makedirs(save_dir, exist_ok=True)
-    # with open(os.path.join(save_dir, 'relation_result_{}.pkl'.format(eval4method)), 'wb') as f:
-    #     pickle.dump(output_dict, f)
+
     return output_dict
 
 def get_dataset():
     pred_audio_dirlist = list()
     eval4method_list = list()
 
-    # pred_audio_dirlist.append('/mnt/nas/yuhang/audioldm/audioldm_data')
-    # eval4method_list.append('audioldm')
-
-    # pred_audio_dirlist.append('/mnt/nas/yuhang/audioldm/audiogen_data')
-    # eval4method_list.append('audioldm')
-
-    # pred_audio_dirlist.append('/mnt/nas/yuhang/audioldm/makeanaudio_data')
-    # eval4method_list.append('makeanaudio')
-
-    # pred_audio_dirlist.append('/mnt/nas/yuhang/audioldm/tango_data')
-    # eval4method_list.append('tango')
-
-    # pred_audio_dirlist.append('/mnt/nas/yuhang/audioldm/tango2_data')
-    # eval4method_list.append('tango2')
-
-    # pred_audio_dirlist.append('/mnt/nas/yuhang/audioldm/audioldm_LFull_data')
-    # eval4method_list.append('audioldm')
-
-    # pred_audio_dirlist.append('/mnt/nas/yuhang/audioldm/tango2_finetune')
-    # eval4method_list.append('tango2')
-
-    pred_audio_dirlist.append('/mnt/nas/yuhang/audioldm/tango-finetuned')
+    pred_audio_dirlist.append('tango-finetuned')
     eval4method_list.append('tango')
-
-    # pred_audio_dirlist.append('/mnt/nas/yuhang/audioldm/audioldm2_LFull_data')
-    # eval4method_list.append('audioldm')
 
     return pred_audio_dirlist, eval4method_list
                     
@@ -218,12 +178,11 @@ def main():
     with open(config_filename, 'r') as f:
         config = yaml.safe_load(f)
     
-    data_dict_filename = '/mnt/nas/yuhang/audioldm/gen_data_fixed/data_dict.pkl'
+    data_dict_filename = 'data_dict.pkl'
     pred_audio_dir_list, eval4method_list = get_dataset()
-    save_dir = '/mnt/nas/yuhang/audioldm/benchmark_eval_0.1'
+    save_dir = 'benchmark_eval_0.1'
     os.makedirs(save_dir, exist_ok=True)
 
-    # confidence_score_list = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]
     confscore_list = config['confscore']
     confscore_min = confscore_list[0]
     confscore_stepsize = confscore_list[1]

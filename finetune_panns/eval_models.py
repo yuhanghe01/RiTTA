@@ -96,7 +96,7 @@ def main(args):
     mAUC_list = []
     for model_id in model_id_list:    
         evaluator = Evaluator()
-        pretrained_model = '/home/yuhang/soundsource-2.0/audioldm/audioset_tagging_cnn/finetune_det/trained_model/TRC_model_epoch_{}.pth'.format(model_id)
+        pretrained_model = 'model_epoch_{}.pth'.format(model_id)
         assert os.path.exists(pretrained_model)
         mAP, mAUC = evaluator.eval(pretrained_model_path=pretrained_model, 
                     args=args,

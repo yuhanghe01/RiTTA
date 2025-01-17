@@ -31,7 +31,6 @@ class FrechetAudioDistance:
             for sub_cate in self.data_dict[main_cate].keys():
                 if sub_cate == 'not':
                     continue
-                # if sub_cate == 'f_then_else':
                 for data_tmp in self.data_dict[main_cate][sub_cate]:
                     ref_audio_filename = data_tmp['reference_audio']
                     pred_audio_filename = data_tmp['reference_audio'].replace('.wav', '_{}.wav'.format(self.TTA_method_name))
@@ -57,9 +56,7 @@ class FrechetAudioDistance:
                         ref_embed = np.load(os.path.join(self.reference_dir, ref_audio_filename.replace('.wav', self.feat_embed_name)))
                     ref_embed_list.append(ref_embed)
                     pred_embed_list.append(pred_embed)
-                    # pred_embed_list.append(ref_embed)
 
-        """return np.concatenate(ref_embed_list, axis=0), np.concatenate(pred_embed_list, axis=0)"""
         return np.concatenate(ref_embed_list, axis=0), np.concatenate(pred_embed_list, axis=0)
 
     def get_embeddings(self, input_dir):
@@ -153,8 +150,6 @@ class FrechetAudioDistance:
     def get_fad_score(self):
         # background_dir: generated samples
         # eval_dir: groundtruth samples
-        # embed_ref = self.get_embeddings(self.reference_dir)
-        # embed_pred = self.get_embeddings(self.pred_dir)
         embed_ref, embed_pred = self.get_ref_pred_embeddings()
         mu_ref, sigma_ref = self.calculate_embd_statistics(embed_ref)
         mu_pred, sigma_pred = self.calculate_embd_statistics(embed_pred)
@@ -169,20 +164,10 @@ class FrechetAudioDistance:
             mu_ref, sigma_ref = self.calculate_embd_statistics(embed_ref)
             mu_pred, sigma_pred = self.calculate_embd_statistics(embed_pred)
             fad_score = self.calculate_frechet_distance(mu_ref, sigma_ref, mu_pred, sigma_pred)
-            # print('Main cate: ', main_cate)
             print('main_cate: {}, FAD score: {}'.format(main_cate,fad_score))
 
 if __name__ == "__main__":
-    pred_dir = '/mnt/nas/yuhang/audioldm/audioldm_data' #5.65298179707108
-    # pred_dir = '/mnt/nas/yuhang/audioldm/tango2_data' # 13.83934504194481
-    # pred_dir = '/mnt/nas/yuhang/audioldm/tango_data' # 10.792733585616613
-    # pred_dir = '/mnt/nas/yuhang/audioldm/makeanaudio_data' # 9.461433261937735
-    # pred_dir = '/mnt/nas/yuhang/audioldm/audiogen_data' # 6.4340542277877475
-    # pred_dir = '/mnt/nas/yuhang/audioldm/audioldm_LFull_data' # 5.468262784257881
-    pred_dir = '/mnt/nas/yuhang/audioldm/audioldm2_LFull_data' # 6.687262388865676
-    pred_dir = '/mnt/nas/yuhang/audioldm/tango2_finetune' # 10.668489915436098
-    pred_dir = '/mnt/nas/yuhang/audioldm/tango-finetuned' # 10.668489915436098
-    ref_dir = '/mnt/nas/yuhang/audioldm/gen_data_bak'
+    ref_dir = 'gen_data'
     data_dict_filename = os.path.join(ref_dir, 'data_dict.pkl')
     fad = FrechetAudioDistance(ref_dir, pred_dir, data_dict_filename=data_dict_filename,
                                use_panns_embed=False, TTA_method_name='tango')

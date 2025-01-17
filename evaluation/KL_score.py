@@ -172,16 +172,7 @@ class KLDistance:
         return fad_score
 
 if __name__ == "__main__":
-    pred_dir = '/mnt/nas/yuhang/audioldm/audioldm_data' # 38.94636692654581
-    pred_dir = '/mnt/nas/yuhang/audioldm/tango2_data' # 89.66388428005241
-    pred_dir = '/mnt/nas/yuhang/audioldm/tango_data' # 90.2618047456912
-    # pred_dir = '/mnt/nas/yuhang/audioldm/makeanaudio_data' # 82.7153162546361
-    # pred_dir = '/mnt/nas/yuhang/audioldm/audiogen_data' # vggish: 28.018734886740397
-    pred_dir = '/mnt/nas/yuhang/audioldm/audioldm_LFull_data' # 38.42170356697003
-    pred_dir = '/mnt/nas/yuhang/audioldm/audioldm2_LFull_data' # 29.074793744929032
-    pred_dir = '/mnt/nas/yuhang/audioldm/tango2_finetune' # 38.94636692654581
-    pred_dir = '/mnt/nas/yuhang/audioldm/tango-finetuned' # 38.94636692654581
-    ref_dir = '/mnt/nas/yuhang/audioldm/gen_data_bak'
+    pred_dir = 'audioldm_data'
     data_dict_filename = os.path.join(ref_dir, 'data_dict.pkl')
     kl_scoring = KLDistance(ref_dir, pred_dir, data_dict_filename=data_dict_filename,
                                use_panns_embed=False, TTA_method_name='tango')

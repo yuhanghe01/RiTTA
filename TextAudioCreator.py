@@ -193,23 +193,6 @@ class TextAudioCreator(object):
                 composite_audio = composite_audio / np.max(np.abs(composite_audio))
                 composite_audio = composite_audio.astype(np.float16) * 32767
 
-                # audio1 = audio_data_list[0]
-                # audio1 = audio1 / np.max(np.abs(audio1))
-                # audio1 = audio1.astype(np.float16) * 32767
-                # wavfile.write('audio1.wav', audio_sr, audio1.astype(np.int16))
-
-                # audio2 = audio_data_list[1]
-                # audio2 = audio2 / np.max(np.abs(audio2))
-                # audio2 = audio2.astype(np.float16) * 32767
-                # wavfile.write('audio2.wav', audio_sr, audio2.astype(np.int16))
-
-                # audio3 = audio_data_list[2]
-                # audio3 = audio3 / np.max(np.abs(audio3))
-                # audio3 = audio3.astype(np.float16) * 32767
-                # wavfile.write('audio3.wav', audio_sr, audio3.astype(np.int16))
-
-                # wavfile.write('composite_audio.wav', audio_sr, composite_audio.astype(np.int16))
-
 
                 composite_audio2[audio3_start_sec*audio_sr: (audio3_start_sec + audio3_sec)*audio_sr] = audio_data_list[2]
                 composite_audio2 = composite_audio2 / np.max(np.abs(composite_audio2))
@@ -234,20 +217,9 @@ class TextAudioCreator(object):
                 composite_audio[audio1_start_sec*audio_sr: (audio1_start_sec + audio1_sec)*audio_sr] = audio_data_list[0]
                 composite_audio[audio2_start_sec*audio_sr: (audio2_start_sec + audio2_sec)*audio_sr] = audio_data_list[0]
             
-            # audio_ori = audio_data_list[0]/np.max(np.abs(audio_data_list[0]))
-            # audio_ori = audio_ori.astype(np.float16) * 32767
-            # wavfile.write('audio_ori.wav', audio_sr, audio_ori.astype(np.int16))
-            # audio_reduce = audio_data_list[0] * loudness_reduction_ratio
-            # audio_reduce = audio_reduce / np.max(np.abs(audio_reduce))
-            # audio_reduce /= 10.0
-            # audio_reduce = audio_reduce.astype(np.float16) * 32767
-            # # audio_reduce = audio_reduce / np.max(np.abs(audio_reduce))
-            # wavfile.write('audio_reduce.wav', audio_sr, audio_reduce.astype(np.int16))
 
             composite_audio = composite_audio / np.max(np.abs(composite_audio))
             composite_audio = composite_audio.astype(np.float16) * 32767
-
-            # wavfile.write('composite_audio_total.wav', audio_sr, composite_audio.astype(np.int16))
 
             return composite_audio
 

@@ -53,9 +53,7 @@ class FrechetDistance:
                         ref_embed = np.load(os.path.join(self.reference_dir, ref_audio_filename.replace('.wav', self.feat_embed_name)))
                     ref_embed_list.append(ref_embed)
                     pred_embed_list.append(pred_embed)
-                    # pred_embed_list.append(ref_embed)
 
-        """return np.concatenate(ref_embed_list, axis=0), np.concatenate(pred_embed_list, axis=0)"""
         if self.use_panns_embed:
             return np.stack(ref_embed_list, axis=0), np.stack(pred_embed_list, axis=0)
         else:
@@ -112,16 +110,7 @@ class FrechetDistance:
         return fd_score
 
 if __name__ == "__main__":
-    pred_dir = '/mnt/nas/yuhang/audioldm/audioldm_data' # 37.296505778623015
-    pred_dir = '/mnt/nas/yuhang/audioldm/tango2_data' # 44.0311992549423
-    pred_dir = '/mnt/nas/yuhang/audioldm/tango_data' # 39.46281969398255
-    pred_dir = '/mnt/nas/yuhang/audioldm/makeanaudio_data' # 45.98433863645286
-    pred_dir = '/mnt/nas/yuhang/audioldm/audiogen_data' # 32.03778631292958
-    pred_dir = '/mnt/nas/yuhang/audioldm/audioldm_LFull_data' # 37.96118232902522
-    pred_dir = '/mnt/nas/yuhang/audioldm/audioldm2_LFull_data' # 35.85472472913443
-    pred_dir = '/mnt/nas/yuhang/audioldm/tango2_finetune' # 38.42924808027071
-    pred_dir = '/mnt/nas/yuhang/audioldm/tango-finetuned' # 38.42924808027071
-    ref_dir = '/mnt/nas/yuhang/audioldm/gen_data_bak'
+    pred_dir = 'audioldm_data'
     data_dict_filename = os.path.join(ref_dir, 'data_dict.pkl')
     fd = FrechetDistance(ref_dir, pred_dir, data_dict_filename=data_dict_filename,
                                use_panns_embed=True, TTA_method_name='tango')

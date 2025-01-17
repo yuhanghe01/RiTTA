@@ -11,7 +11,7 @@ DATA_CREATION_CONFIG:
   each_relation_num2gen: 14400 # 360 equals to 1 hour
   audio_length: 10 # seconds
   audio_sr: 16000 # Hz
-  save_dir: /mnt/nas/yuhang/audioldm/gen_data_train
+  save_dir: gen_data_train
   seed_audio_dir: seed_audios
   name2label_filename: name2label_map.txt
   loudness_reduction_ratio: 0.2

@@ -72,16 +72,16 @@ def main(args):
     device = torch.device(dev)
     print("using device: ", dev)  
     evaluator = Evaluator()
-    pretrained_model = '/home/yuhang/soundsource-2.0/audioldm/audioset_tagging_cnn/finetune_det/trained_model/TRC_model_epoch_490.pth'
-    audio_dir = '/mnt/nas/yuhang/audioldm/audioldm_data'
-    audio_dir = '/mnt/nas/yuhang/audioldm/audiogen_data'
-    audio_dir = '/mnt/nas/yuhang/audioldm/makeanaudio_data'
-    audio_dir = '/mnt/nas/yuhang/audioldm/tango_data'
-    audio_dir = '/mnt/nas/yuhang/audioldm/tango2_data'
-    audio_dir = '/mnt/nas/yuhang/audioldm/audioldm_LFull_data'
-    audio_dir = '/mnt/nas/yuhang/audioldm/audioldm2_LFull_data'
-    audio_dir = '/mnt/nas/yuhang/audioldm/tango2_finetune'
-    audio_dir = '/mnt/nas/yuhang/audioldm/tango-finetuned'
+    pretrained_model = 'model.pth'
+    audio_dir = 'audioldm_data'
+    audio_dir = 'audiogen_data'
+    audio_dir = 'makeanaudio_data'
+    audio_dir = 'tango_data'
+    audio_dir = 'tango2_data'
+    audio_dir = 'audioldm_LFull_data'
+    audio_dir = 'audioldm2_LFull_data'
+    audio_dir = 'tango2_finetune'
+    audio_dir = 'tango-finetuned'
     assert os.path.exists(pretrained_model)
     evaluator.eval(pretrained_model_path=pretrained_model, 
                    audio_dir=audio_dir,
