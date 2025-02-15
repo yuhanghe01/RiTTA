@@ -10,6 +10,7 @@ class EmbedExtractor:
     def __init__(self, config = None) -> None:
         self.config = config
         self.get_vggish_model()
+        self.get_panns_model()
 
     def get_vggish_model(self):
         use_pca = self.config['vggish_config']['use_pca']

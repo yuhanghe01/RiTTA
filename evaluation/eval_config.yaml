@@ -1,4 +1,4 @@
-PANNS_cptpath: ../models/cnnCnn14_mAP=0.431.pth
+PANNS_cptpath: ../models/Cnn14_mAP=0.431.pth
 name2labelmap_filename: name_label_list.txt
 finetuned_det_panns: ../model/PANNS_objdet_finetune_25class.pth
 confscore: [0.5, 0.1, 0.9] # [min, step_size, max]
