@@ -9,7 +9,6 @@ import glob
 class EmbedExtractor:
     def __init__(self, config = None) -> None:
         self.config = config
-        assert len(self.audio_filename_list) > 0
         self.get_vggish_model()
 
     def get_vggish_model(self):
@@ -67,6 +66,7 @@ class EmbedExtractor:
             if audio_id % 100 == 0:
                 print(f'Processing {audio_id}/{len(audio_filename_list)}')
             (waveform, _) = librosa.core.load(audio_filename, sr=16000, mono=True)
+            device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
             waveform = torch.from_numpy(waveform).to(torch.float32).to(device)
             waveform = waveform.unsqueeze(0)
 

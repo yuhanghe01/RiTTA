@@ -1,10 +1,9 @@
 PANNS_cptpath: ../models/cnnCnn14_mAP=0.431.pth
 name2labelmap_filename: name_label_list.txt
-finetuned_det_panns: /hdd2/yuhang/soundsource-2.0/audioldm/audioset_tagging_cnn/finetune_det/trained_model_bak/TRC_model_epoch_490.pth
-finetuned_tag_panns: /hdd2/yuhang/soundsource-2.0/audioldm/audioset_tagging_cnn/finetune_tagging/trained_model/TRC_model_epoch_350.pth
+finetuned_det_panns: ../model/PANNS_objdet_finetune_25class.pth
 confscore: [0.5, 0.1, 0.9] # [min, step_size, max]
 eval4method: audioldm
-result_save_dir: /mnt/nas/yuhang/audioldm/relation_eval
+result_save_dir: relation_eval
 relations_require_timesteps: ['closefirst', 'farfirst', 'equaldist']
 relations_require_timeorder: ['before', 'after', 'together']
 relations_require_labelset: ['and', 'or', 'not', 'if_then_else', 'count']
