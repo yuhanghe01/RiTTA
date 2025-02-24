@@ -16,7 +16,7 @@ class SimpleModel(torch.nn.Module):
         return self.fc(x)
 
 # Training function
-def train(rank, world_size, epochs=10, batch_size=32, save_path="checkpoint.pth"):
+def train(rank, world_size, epochs=10, batch_size=32):
     # Set master address & port (important for multi-node training)
     os.environ["MASTER_ADDR"] = os.environ.get("MASTER_ADDR", "localhost")
     os.environ["MASTER_PORT"] = os.environ.get("MASTER_PORT", "12355")  # Ensure this port is open
@@ -48,7 +48,6 @@ def train(rank, world_size, epochs=10, batch_size=32, save_path="checkpoint.pth"
 
         for inputs, labels in dataloader:
             inputs, labels = inputs.to(rank), labels.to(rank)
-
             optimizer.zero_grad()
             outputs = model(inputs)
             loss = criterion(outputs, labels)
@@ -65,6 +64,7 @@ def train(rank, world_size, epochs=10, batch_size=32, save_path="checkpoint.pth"
 
     # Save the model only from rank 0
     if rank == 0:
+        save_path = '/mnt/pvc-blob-fuse-out/yuhang/checkpoint.pth'
         torch.save(model.module.state_dict(), save_path)
         print(f"Model saved at {save_path}")
 
