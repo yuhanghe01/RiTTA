@@ -22,10 +22,13 @@ def train():
     world_size = int(os.environ["WORLD_SIZE"])  # Total number of processes
     local_rank = int(os.environ["LOCAL_RANK"])  # Rank within the current node
 
+    print('rank = {}, world_size = {}, local_rank = {}'.format(rank, world_size, local_rank))
+
     # Set device
     torch.cuda.set_device(local_rank)
 
     # Initialize process group
+    print('initializing the dist process group')
     dist.init_process_group("nccl", rank=rank, world_size=world_size)
 
     # Create model and move to GPU
@@ -45,6 +48,7 @@ def train():
     dataloader = DataLoader(dataset, batch_size=32, sampler=sampler)
 
     # Training loop
+    print('start training loop!')
     for epoch in range(10):
         sampler.set_epoch(epoch)  # Ensure different shuffling per epoch
         model.train()
