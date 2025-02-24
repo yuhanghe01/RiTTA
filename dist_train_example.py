@@ -1,10 +1,23 @@
 import os
 import torch
 import torch.distributed as dist
-import torch.multiprocessing as mp
+import argparse
 from torch.nn.parallel import DistributedDataParallel as DDP
-from torch.utils.data import DataLoader, DistributedSampler, TensorDataset
+from torch.utils.data import Dataset, DataLoader, DistributedSampler
 import torch.optim.lr_scheduler as lr_scheduler
+
+# Define a simple dataset class
+class RandomDataset(Dataset):
+    def __init__(self, num_samples=1000, input_size=10):
+        self.num_samples = num_samples
+        self.inputs = torch.randn(num_samples, input_size)
+        self.labels = torch.randint(0, 2, (num_samples,))  # Binary classification
+
+    def __len__(self):
+        return self.num_samples
+
+    def __getitem__(self, index):
+        return self.inputs[index], self.labels[index]
 
 # Define a simple model
 class SimpleModel(torch.nn.Module):
@@ -17,18 +30,15 @@ class SimpleModel(torch.nn.Module):
 
 # Training function
 def train():
-    # Initialize distributed environment variables (set by torchrun)
-    rank = int(os.environ["RANK"])            # Global rank of the process
-    world_size = int(os.environ["WORLD_SIZE"])  # Total number of processes
-    local_rank = int(os.environ["LOCAL_RANK"])  # Rank within the current node
-
-    print('rank = {}, world_size = {}, local_rank = {}'.format(rank, world_size, local_rank))
+    # Get environment variables from torchrun
+    rank = int(os.environ["RANK"])
+    world_size = int(os.environ["WORLD_SIZE"])
+    local_rank = int(os.environ["LOCAL_RANK"])
 
     # Set device
     torch.cuda.set_device(local_rank)
 
     # Initialize process group
-    print('initializing the dist process group')
     dist.init_process_group("nccl", rank=rank, world_size=world_size)
 
     # Create model and move to GPU
@@ -42,13 +52,12 @@ def train():
     # Learning rate scheduler
     scheduler = lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.1)
 
-    # Create dummy dataset
-    dataset = TensorDataset(torch.randn(1000, 10), torch.randint(0, 2, (1000,)))
+    # Create dataset and dataloader
+    dataset = RandomDataset()
     sampler = DistributedSampler(dataset, num_replicas=world_size, rank=rank, shuffle=True)
     dataloader = DataLoader(dataset, batch_size=32, sampler=sampler)
 
     # Training loop
-    print('start training loop!')
     for epoch in range(10):
         sampler.set_epoch(epoch)  # Ensure different shuffling per epoch
         model.train()
