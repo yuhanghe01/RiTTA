@@ -78,7 +78,7 @@ def train():
             current_lr = scheduler.get_last_lr()[0]
             print(f"Epoch {epoch+1}/10, Loss: {loss.item():.4f}, LR: {current_lr:.6f}")
 
-    Save the model only from rank 0
+    # Save the model only from rank 0
     if rank == 0:
         save_path = '/mnt/pvc-blob-fuse-out/yuhang/checkpoint.pth'
         if not os.path.exists('/mnt/pvc-blob-fuse-out/yuhang/'):
