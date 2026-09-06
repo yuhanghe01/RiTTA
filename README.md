@@ -1,6 +1,6 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2412.15922-brightgreen.svg?style=flat-square)](https://arxiv.org/abs/2412.15922) [![Project Website](https://img.shields.io/badge/website-visit-blue?logo=github)](https://yuhanghe01.github.io/RiTTA-Proj/) ![Build](https://img.shields.io/badge/build-passing-brightgreen)
 
-## RiTTA: Modeling Event Relations in Text-to-Audio Generation
+## RiTTA: Modeling Event Relations in Text-to-Audio Generation (EMNLP 2025 Main)
 
 [Yuhang He<sup>1,2</sup>](https://yuhanghe01.github.io/),
 [Yash Jain<sup>2</sup>](https://scholar.google.com/citations?user=Fr6QHDsAAAAJ&hl=en),
@@ -148,11 +148,10 @@ python main_finetune_panns.py
 @inproceedings{yhhe2024ritta,
   title={{RiTTA: Modeling Event Relations in Text-to-Audio Generation}},
   author={He, Yuhang and Jain, Yash and Liu, Xubo and Markham, Andrew and Vineet, Vibhav},
-  booktitle={arXiv:2412.15922},
-  year=2024
+  booktitle={Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing~(EMNLP)},
+  year=2025
 }
 ```
-
 
 ### Relevant Work
 
@@ -173,4 +172,4 @@ Conference on Multimedia (ACMMM), 2023.
 todo -->
 
 ### Contacts :email:
-If you have any questions or suggestions, welcome to contact us (yuhang.he@cs.ox.ac.uk) or open an issue.
+If you have any questions or suggestions, welcome to contact us (yuhanghe@microsoft.com) or open an issue.
